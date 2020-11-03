@@ -1,5 +1,4 @@
 import { Card, Rank, Suit } from "./"
-import _ from "lodash";
 
 export class Deck {
 
@@ -19,7 +18,19 @@ export class Deck {
     }
 
     shuffle() {
-        this.cards = _.shuffle(this.cards);
+        for (let index = this.cards.length - 1; index >= 0; index--) {
+            const swapIndex = Math.floor(Math.random() * index);
+            const temp = this.cards[swapIndex];
+            this.cards[swapIndex] = this.cards[index];
+            this.cards[index] = temp;
+        }
+    }
+
+    sort() {
+        this.cards.sort((a, b) => {
+            const suitDifference = a.suit - b.suit;
+            return suitDifference != 0 ? suitDifference : a.rank - b.rank;
+        })
     }
 
     draw() {
